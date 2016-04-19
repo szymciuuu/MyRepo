@@ -7,6 +7,14 @@ class Biblioteka:
         self.__czytelnicy = {}
         self.wyporzyczone_przez = None
 
+     def raport_ksiazek(self, data):
+        lista = []
+        for k in self.__ksiazki.values():
+            nowsze = k.egzemplarze_nowsze_niz(data)
+            if len(nowsze) > 0:
+                lista.append((k.tytul, k.autor, len(nowsze)))
+        return sorted(lista, key = lambda t: t[0])
+
     def zwroc_czytelnikow(self):
         return self.__czytelnicy;
 
@@ -42,7 +50,7 @@ class Biblioteka:
             if elem.wypozyczony == False:
                 listaDostepnychEgzemplarzy.append(elem)
         return listaDostepnychEgzemplarzy
-
+    
 
     def wypozycz(self, nazwisko, tytul, data):
         try:
